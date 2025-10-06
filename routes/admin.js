@@ -31,5 +31,9 @@ router.get("/products/:id", adminController.getSingleProduct);
 // user-query-route
 router.post("/contact",adminController.addUserQuery);
 router.get("/contact",adminController.getUserQuery);
+// dashboard-route
+router.get("/count",adminController.getAllCount);
+router.get("/products/latest",adminController.getLatestProduct);
+
 
 module.exports = router;

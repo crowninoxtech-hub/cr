@@ -742,7 +742,53 @@ deleteProduct: async (req, res) => {
   }
 },
 getUserQuery:(req,res)=>{
-}
+},
+
+getAllCount: async (req, res) => {
+    try {
+      console.log("lllllllllll")
+      // const [productCount, categoryCount, tagCount, blogCount] = await Promise.all([
+      //   Product.countDocuments(),
+      //   Category.countDocuments(),
+      //   Tag.countDocuments(),
+      //   Blog.countDocuments(),
+      // ]);
+
+      // res.status(200).json({
+      //   success: true,
+      //   data: {
+      //     products: productCount,
+      //     categories: categoryCount,
+      //     tags: tagCount,
+      //     blogs: blogCount,
+      //   },
+      // });
+    } catch (error) {
+      console.error("Error fetching counts:", error);
+      res.status(500).json({
+        success: false,
+        message: "Server Error while fetching counts",
+      });
+    }
+  },
+getLatestProduct: async (req, res) => {
+    try {
+      const latestProducts = await Product.find()
+        .sort({ createdAt: -1 })   // newest first
+        .limit(10);                // only 10
+
+      res.status(200).json({
+        success: true,
+        data: latestProducts,
+      });
+    } catch (error) {
+      console.error("Error fetching latest products:", error);
+      res.status(500).json({
+        success: false,
+        message: "Server Error while fetching latest products",
+      });
+    }
+  },
 
 };
 
