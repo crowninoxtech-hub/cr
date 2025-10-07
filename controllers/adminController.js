@@ -747,24 +747,6 @@ getUserQuery:(req,res)=>{
 getAllCount: async (req, res) => {
     try {
       console.log("lllllllllll")
-<<<<<<< HEAD
-      // const [productCount, categoryCount, tagCount, blogCount] = await Promise.all([
-      //   Product.countDocuments(),
-      //   Category.countDocuments(),
-      //   Tag.countDocuments(),
-      //   Blog.countDocuments(),
-      // ]);
-
-      // res.status(200).json({
-      //   success: true,
-      //   data: {
-      //     products: productCount,
-      //     categories: categoryCount,
-      //     tags: tagCount,
-      //     blogs: blogCount,
-      //   },
-      // });
-=======
       const [productCount, categoryCount, tagCount, blogCount] = await Promise.all([
         Product.countDocuments(),
         Category.countDocuments(),
@@ -781,7 +763,6 @@ getAllCount: async (req, res) => {
           blogs: blogCount,
         },
       });
->>>>>>> 587f66e (first commit)
     } catch (error) {
       console.error("Error fetching counts:", error);
       res.status(500).json({
