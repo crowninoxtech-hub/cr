@@ -741,8 +741,58 @@ deleteProduct: async (req, res) => {
     });
   }
 },
-getUserQuery:(req,res)=>{
+getUserQuery: async (req, res) => {
+    try {
+      const queries = await ContactQuery.find().sort({ createdAt: -1 }); // latest first
+      res.status(200).json({
+        success: true,
+        count: queries.length,
+        data: queries,
+      });
+    } catch (error) {
+      console.error("Error fetching user queries:", error);
+      res.status(500).json({
+        success: false,
+        message: "Failed to fetch user queries",
+      });
+    }
+  },
+deleteUserQuery: async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // 🧩 Check if ID exists
+    if (!id) {
+      return res.status(400).json({ success: false, message: "Query ID is required" });
+    }
+
+    // 🗑️ Delete the query by ID
+    const deletedQuery = await ContactQuery.findByIdAndDelete(id);
+
+    if (!deletedQuery) {
+      return res.status(404).json({ success: false, message: "Query not found" });
+    }
+
+    // 🔁 Get all remaining queries, sorted by newest first
+    const remainingQueries = await ContactQuery.find().sort({ createdAt: -1 });
+
+    // ✅ Success response
+    res.status(200).json({
+      success: true,
+      message: "Query deleted successfully",
+      deletedQuery: deletedQuery,
+      remainingQueries: remainingQueries,
+    });
+  } catch (error) {
+    console.error("❌ Error deleting query:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server error while deleting query",
+      error: error.message,
+    });
+  }
 },
+
 
 getAllCount: async (req, res) => {
     try {
